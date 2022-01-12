@@ -27,10 +27,10 @@ This system is to help manage F0 who receive homecare.  Recently, there are a su
 - [ ] Sign Up page
 - [ ] Inbox page
 - F0 pages:
-	- [ ] register if positive to covid page
-	- [ ] Update the heath codition page
+	- [ ] register form for F0 if positive to covid page (Thien Van)
+	- [ ] Health condition form for F0 to report health condition (Thien Van)
 - Doctor pages:
-	- [ ] See the list of patients page
+	- [ ] See the list of patients page - a list of cards (Thien Van)
 	- [ ] Check the information and heath condition of the patient page
 - Admin pages:
 	- [ ] Manage list of account and roles
