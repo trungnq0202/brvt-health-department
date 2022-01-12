@@ -23,8 +23,8 @@ This system is to help manage F0 who receive homecare.  Recently, there are a su
 
 ## UI list 
 
-- [ ] Log in page
-- [ ] Sign Up page
+- [X] Sign in page
+- [X] Sign Up page
 - [ ] Inbox page
 - F0 pages:
 	- [ ] register form for F0 if positive to covid page (Thien Van)
