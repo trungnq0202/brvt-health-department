@@ -7,6 +7,8 @@ import About from "./Pages/AboutPage/About.jsx";
 import BlogPage from "./Pages/BlogPage/BlogPage";
 import BookingPage from "./Pages/BookingPage/BookingPage";
 import HomePage from "./Pages/HomePage/HomePage";
+import LoginPage from "./Pages/LoginPage/LoginPage";
+import RegisterPage from "./Pages/RegisterPage/RegisterPage";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
       <About />
       <BookingPage />
       <BlogPage />
+      <RegisterPage />
+      <LoginPage />
       <Footer />
     </div>
   );
