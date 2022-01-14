@@ -11,6 +11,7 @@ import Box from "@mui/material/Box";
 import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { MenuItem } from '@mui/material';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function Copyright(props) {
@@ -31,9 +32,21 @@ function Copyright(props) {
   );
 }
 
+const roles = [
+  { value: "ADMIN", label: "Admin" },
+  { value: "F0", label: "Patient" },
+  { value: "DOCTOR", label: "Doctor" },
+];
+
 const theme = createTheme();
 
 export default function LogIn() {
+  const [role, setRole] = React.useState("F0");
+
+  const handleRolePicker = (event) => {
+    setRole(event.target.value);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -90,6 +103,7 @@ export default function LogIn() {
               autoComplete="email"
               autoFocus
             />
+
             <TextField
               margin="normal"
               required
@@ -100,6 +114,24 @@ export default function LogIn() {
               id="password"
               autoComplete="current-password"
             />
+
+            <Grid item xs={12}>
+              <TextField
+                id="outlined-select-role"
+                select
+                fullWidth
+                label="Select Role"
+                value={role}
+                onChange={handleRolePicker}
+                helperText="Please select your role"
+              >
+                {roles.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
