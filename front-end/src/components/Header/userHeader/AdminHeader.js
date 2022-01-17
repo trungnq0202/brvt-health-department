@@ -25,7 +25,10 @@ export default class AdminHeader extends Component {
                 User Profile
               </a>
               <a href="/UserMana" class="nav-item nav-link active">
-                Manage User
+                Manage Patient
+              </a>
+              <a href="/DoctorMana" class="nav-item nav-link active">
+                Manage Doctor
               </a>
             </div>
             <div class="navbar-nav ms-auto">
