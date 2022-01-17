@@ -21,8 +21,8 @@ export default class PatientHeader extends Component {
           </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav">
-              <a href="#" class="nav-item nav-link active">
-                User Profile
+              <a href="/" class="nav-item nav-link active">
+                Home Page
               </a>
               <a href="/RegisterF0" class="nav-item nav-link active">
                 Register F0

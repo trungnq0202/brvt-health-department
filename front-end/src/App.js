@@ -19,6 +19,7 @@ import NewStory from "./components/BlogComponents/NewStory";
 import SinglePost from "./components/BlogComponents/SinglePost";
 import React, { Component } from "react";
 
+// Sample blog data
 import data from "./data";
 import './App.css';
 
@@ -35,6 +36,7 @@ export default class App extends Component {
     this.handleRemove = this.handleRemove.bind(this);
   }
   // Blog handler methods
+  // TODO: fetch blog data from API
   handleBookmark(data) {
     let posts = this.state.posts;
     posts = posts.map((post) =>
@@ -106,14 +108,6 @@ export default class App extends Component {
           <Route
             path="/new"
             element={<NewStory handleSubmission={this.handleSubmission} />}
-          />
-          <Route
-            path="/bookmark"
-            element={
-              <Bookmark
-                bookmarks={this.state.posts.filter((post) => post.bookmark)}
-              />
-            }
           />
           <Route
             path="/post/:id"
