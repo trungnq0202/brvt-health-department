@@ -58,9 +58,9 @@ function UserManaTable() {
     {title: "id", field: "id", hidden: true},
     {title: "User name", field: "name"},
     {title: "phoneNumber", field: "PhoneNumber"},
-    {title: "email", field: "email"},
-    {title: "status", field: "status"},
-    {title: "illnessLevel", field: "illnessLevel"}
+    {title: "email", field: "email"},    
+    {title: "Career Level", field: "careerLevel"},
+
   ]
   const [data, setData] = useState([]); //table data
 
@@ -87,12 +87,6 @@ function UserManaTable() {
     }
     if(newData.phoneNumber === ""){
       errorList.push("Please enter phone number")
-    }
-    if(newData.status === ""){
-      errorList.push("Please enter status")
-    }
-    if(newData.illnessLevel === ""){
-      errorList.push("Please enter illness")
     }
     if(newData.email === "" || validateEmail(newData.email) === false){
       errorList.push("Please enter a valid email")
