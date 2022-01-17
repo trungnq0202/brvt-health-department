@@ -1,55 +1,60 @@
 import React, { Component } from "react";
 import { Link, Navigate } from "react-router-dom";
-
+import AdminHeader from "./userHeader/AdminHeader";
+import PatientHeader from "./userHeader/PatientHeader";
+import DoctorHeader from "./userHeader/DoctorHeader";
 export default class Header extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showAdmin: false,
+      showDoctor: false,
+      showPatient: false,
+    };
+  }
+
+  componentDidMount() {
+    // TODO: Fetch User
+    switch (this.props.role) {
+      case "ADMIN":
+        this.setState({
+          showAdmin: true,
+          showDoctor: false,
+          showPatient: false,
+        });
+        break;
+      case "DOCTOR":
+        this.setState({
+          showAdmin: false,
+          showDoctor: true,
+          showPatient: false,
+        });
+        break;
+      case "PATIENT":
+        this.setState({
+          showAdmin: false,
+          showDoctor: false,
+          showPatient: true,
+        });
+        break;
+      default:
+        this.setState({
+          showAdmin: false,
+          showDoctor: false,
+          showPatient: true,
+        });
+    }
+  }
+
   render() {
-    return ( <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
-      <div class="container">
-        <a href="#" class="navbar-brand d-flex align-items-center">
-          {" "}
-          <i class="fa fa-snowflake-o fa-lg text-primary mr-2"></i>
-          <strong>{ this.props.role }</strong>
-        </a>
-        <button
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-          class="navbar-toggler"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div id="navbarSupportedContent" class="collapse navbar-collapse">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a href="#" class="nav-link font-italic">
-                {" "}
-                Home{" "}
-              </a>
-            </li>
-            <li class="nav-item active">
-              <a href="#" class="nav-link font-italic">
-                {" "}
-                About{" "}
-              </a>
-            </li>
-            <li class="nav-item active">
-              <a href="#" class="nav-link font-italic">
-                {" "}
-                Services{" "}
-              </a>
-            </li>
-            <li class="nav-item active">
-              <a href="#" class="nav-link font-italic">
-                {" "}
-                Contact
-              </a>
-            </li>
-          </ul>
-        </div>
+    const { showAdmin, showDoctor, showPatient } = this.state;
+    return (
+      <div>
+        {showAdmin && <AdminHeader />}
+        {showPatient && <PatientHeader />}
+        {showDoctor && <DoctorHeader />}
       </div>
-    </nav>);
+    );
   }
 }

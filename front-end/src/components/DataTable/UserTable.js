@@ -118,7 +118,7 @@ function UserTable() {
         resolve()
         
       })
-    }else{
+    } else {
       setErrorMessages(errorList)
       setIserror(true)
       resolve()

@@ -14,24 +14,6 @@ import Container from "@mui/material/Container";
 import { MenuItem } from '@mui/material';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <LinkUI color="inherit" href="https://mui.com/">
-        Your Website
-      </LinkUI>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 const roles = [
   { value: "ADMIN", label: "Admin" },
   { value: "F0", label: "Patient" },
@@ -145,20 +127,14 @@ export default function LogIn() {
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
-                <LinkUI href="#" variant="body2">
-                  Forgot password?
-                </LinkUI>
-              </Grid>
               <Grid item>
-                <LinkUI href="#" variant="body2">
+                <LinkUI href="/SignUp" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </LinkUI>
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );

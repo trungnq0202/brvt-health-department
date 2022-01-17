@@ -14,24 +14,6 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <LinkUI color="inherit" href="https://mui.com/">
-        Your Website
-      </LinkUI>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
 const roles = [
   { value: "ADMIN", label: "Admin" },
   { value: "F0", label: "Patient" },
@@ -174,14 +156,13 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <LinkUI href="#" variant="body2">
+                <LinkUI href="/LogIn" variant="body2">
                   Already have an account? Sign in
                 </LinkUI>
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );
