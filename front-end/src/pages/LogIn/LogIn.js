@@ -11,7 +11,7 @@ import Box from "@mui/material/Box";
 import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { MenuItem } from '@mui/material';
+import { MenuItem } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const roles = [
@@ -24,19 +24,47 @@ const theme = createTheme();
 
 export default function LogIn() {
   const [role, setRole] = React.useState("F0");
+  const [emailErr, setEmailErr] = React.useState();
+  const [passwordErr, setPasswordErr] = React.useState();
 
   const handleRolePicker = (event) => {
     setRole(event.target.value);
   };
 
+  const validateEmail = (email) => {
+    return email.match(
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
+    // Validation
+    var errCount = 0
+    if (data.get("email") === "" || !validateEmail(data.get("email"))) {
+      setEmailErr(true);
+      errCount++;
+    }
+    if (data.get("password") === "") {
+      setPasswordErr(true);
+      errCount++;
+    }
+
+    if(errCount > 0) {
+      return
+    }
+
+    setPasswordErr(false)
+    setEmailErr(false)
+
+    var formData = {
       email: data.get("email"),
       password: data.get("password"),
-    });
+      role: role,
+    };
+
+    window.alert(JSON.stringify(formData, 0, 2));
   };
 
   return (
@@ -84,6 +112,8 @@ export default function LogIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              error={emailErr}
+              helperText="need to fill email"
             />
 
             <TextField
@@ -95,6 +125,8 @@ export default function LogIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              error={passwordErr}
+              helperText="need to fill password"
             />
 
             <Grid item xs={12}>

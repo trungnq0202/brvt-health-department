@@ -30,6 +30,9 @@ export default class PatientHeader extends Component {
               <a href="/UpdateHealth" class="nav-item nav-link active">
                 Update Health
               </a>
+              <a href="/DoctorList" class="nav-item nav-link active">
+                See list of doctor
+              </a>
             </div>
             <div class="navbar-nav ms-auto">
               <a href="#" class="nav-item nav-link active">

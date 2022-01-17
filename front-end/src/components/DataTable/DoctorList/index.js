@@ -3,6 +3,7 @@ import { forwardRef } from 'react';
 import Avatar from 'react-avatar';
 import Grid from '@material-ui/core/Grid'
 import { Select, MenuItem } from "@material-ui/core";
+import Button from "@mui/material/Button";
 
 import MaterialTable from "material-table";
 import AddBox from '@material-ui/icons/AddBox';
@@ -53,24 +54,13 @@ function validateEmail(email){
   return re.test(String(email).toLowerCase());
 }
 
-function UserManaTable() {
+function DoctorList() {
   var columns = [
     {title: "id", field: "id", hidden: true},
     {title: "User name", field: "name"},
     {title: "phoneNumber", field: "PhoneNumber"},
     {title: "email", field: "email"},
-    {title: "status", field: "status"},
-    {title: "illnessLevel", field: "illnessLevel"},
-    {
-      title: "Role",
-      field: "role",
-      lookup:
-        {
-          1:"Admin",
-          2:"F0",
-          3:"Doctor"
-        }  
-    },
+    {title: "Career Level", field: "careerLevel"},
   ]
   const [data, setData] = useState([]); //table data
 
@@ -79,7 +69,7 @@ function UserManaTable() {
   const [errorMessages, setErrorMessages] = useState([])
 
   useEffect(() => {
-    // TODO Get all user API
+    // TODO Get all Doctor API
     api.get("/users")
         .then(res => {               
             setData(res.data.data)
@@ -88,120 +78,6 @@ function UserManaTable() {
              console.log("Error")
          })
   }, [])
-
-  const handleRowUpdate = (newData, oldData, resolve) => {
-    //validation
-    let errorList = []
-    if(newData.name === ""){
-      errorList.push("Please enter name")
-    }
-    if(newData.phoneNumber === ""){
-      errorList.push("Please enter phone number")
-    }
-    if(newData.status === ""){
-      errorList.push("Please enter status")
-    }
-    if(newData.illnessLevel === ""){
-      errorList.push("Please enter illness")
-    }
-    if(newData.role === ""){
-      errorList.push("Please pick role name")
-    }
-    if(newData.email === "" || validateEmail(newData.email) === false){
-      errorList.push("Please enter a valid email")
-    }
-
-    // TODO: Update user api
-    if(errorList.length < 1){
-      api.patch("/users/"+newData.id, newData)
-      .then(res => {
-        const dataUpdate = [...data];
-        const index = oldData.tableData.id;
-        dataUpdate[index] = newData;
-        setData([...dataUpdate]);
-        resolve()
-        setIserror(false)
-        setErrorMessages([])
-      })
-      .catch(error => {
-        setErrorMessages(["Update failed! Server error"])
-        setIserror(true)
-        resolve()
-        
-      })
-    } else {
-      setErrorMessages(errorList)
-      setIserror(true)
-      resolve()
-
-    }
-    
-  }
-
-  const handleRowAdd = (newData, resolve) => {
-    //validation
-    let errorList = []
-    if(newData.name === ""){
-      errorList.push("Please enter name")
-    }
-    if(newData.phoneNumber === ""){
-      errorList.push("Please enter phone number")
-    }
-    if(newData.status === ""){
-      errorList.push("Please enter status")
-    }
-    if(newData.illnessLevel === ""){
-      errorList.push("Please enter illness")
-    }
-    if(newData.role === ""){
-      errorList.push("Please pick role name")
-    }
-    if(newData.email === "" || validateEmail(newData.email) === false){
-      errorList.push("Please enter a valid email")
-    }
-
-    if(errorList.length < 1){ //no error
-      // TODO: add new user API
-      api.post("/users", newData)
-      .then(res => {
-        let dataToAdd = [...data];
-        dataToAdd.push(newData);
-        setData(dataToAdd);
-        resolve()
-        setErrorMessages([])
-        setIserror(false)
-      })
-      .catch(error => {
-        setErrorMessages(["Cannot add data. Server error!"])
-        setIserror(true)
-        resolve()
-      })
-    }else{
-      setErrorMessages(errorList)
-      setIserror(true)
-      resolve()
-    }
-
-    
-  }
-
-  const handleRowDelete = (oldData, resolve) => {
-    // TODO: delete user API
-    api.delete("/users/"+oldData.id)
-      .then(res => {
-        const dataDelete = [...data];
-        const index = oldData.tableData.id;
-        dataDelete.splice(index, 1);
-        setData([...dataDelete]);
-        resolve()
-      })
-      .catch(error => {
-        setErrorMessages(["Delete failed! Server error"])
-        setIserror(true)
-        resolve()
-      })
-  }
-
 
   return (
     <div className="">
@@ -218,24 +94,30 @@ function UserManaTable() {
             }       
           </div>
             <MaterialTable
-              title="User Management"
+              title="Doctor list"
               columns={columns}
               data={data}
               icons={tableIcons}
-              editable={{
-                onRowUpdate: (newData, oldData) =>
-                  new Promise((resolve) => {
-                      handleRowUpdate(newData, oldData, resolve);
-                      
-                  }),
-                onRowAdd: (newData) =>
-                  new Promise((resolve) => {
-                    handleRowAdd(newData, resolve)
-                  }),
-                onRowDelete: (oldData) =>
-                  new Promise((resolve) => {
-                    handleRowDelete(oldData, resolve)
-                  }),
+              actions={[
+                {
+                  icon: 'save',
+                  tooltip: 'add doctor',
+                  onClick: (event, rowData) => alert("You add this doctor ")
+                }
+              ]}
+              components={{
+                Action: props => (
+                  <Button
+                    onClick={(event) => props.action.onClick(event, props.data)}
+                    color="primary"
+                    variant="contained"
+                    style={{textTransform: 'none'}}
+                    size="small"
+                    style= {{margin: "10px"}}
+                  >
+                    register
+                  </Button>
+                ),
               }}
             />
           </Grid>
@@ -245,4 +127,4 @@ function UserManaTable() {
   );
 }
 
-export default UserManaTable;
+export default DoctorList;

@@ -20,10 +20,21 @@ const roles = [
   { value: "DOCTOR", label: "Doctor" },
 ];
 
+const validateEmail = (email) => {
+  return email.match(
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  );
+};
+
 const theme = createTheme();
 
 export default function SignUp() {
   const [role, setRole] = React.useState("F0");
+
+  const [emailErr, setEmailErr] = React.useState();
+  const [passwordErr, setPasswordErr] = React.useState();
+  const [nameErr, setNameErr] = React.useState();
+  const [phoneErr, setPhoneErr] = React.useState();
 
   const handleRolePicker = (event) => {
     setRole(event.target.value);
@@ -32,11 +43,42 @@ export default function SignUp() {
   const handleSubmitBtn = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
+    // Validation
+    var errCount = 0
+    if (data.get("email") === "" || !validateEmail(data.get("email"))) {
+      setEmailErr(true);
+      errCount++;
+    }
+    if (data.get("password") === "") {
+      setPasswordErr(true);
+      errCount++;
+    }
+    if (data.get("name") === "") {
+      setNameErr(true);
+      errCount++;
+    }
+    if (data.get("phoneNumber") === "") {
+      setPhoneErr(true);
+      errCount++;
+    }
+    if(errCount > 0) {
+      return
+    }
+    setPasswordErr(false);
+    setEmailErr(false);
+    setNameErr(false);
+    setPhoneErr(false);
     // eslint-disable-next-line no-console
-    console.log({
+    var formData = {
+      firstName: data.get("name"),
+      phoneNumber: data.get("phoneNumber"),
       email: data.get("email"),
       password: data.get("password"),
-    });
+      role: role
+    };
+
+    window.alert(JSON.stringify(formData, 0, 2))
   };
 
   return (
@@ -77,25 +119,28 @@ export default function SignUp() {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <TextField
-                  autoComplete="given-name"
-                  name="firstName"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
+                  id="name"
+                  label="Name"
+                  name="name"
+                  autoComplete="name"
+                  error={nameErr}
+                  helperText="need to fill name"
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
+                  id="phoneNumber"
+                  label="Phone Number"
+                  name="phoneNumber"
+                  autoComplete="phoneNumber"
+                  error={phoneErr}
+                  helperText="need to fill this field"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -106,6 +151,8 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  error={emailErr}
+                  helperText="need to fill email"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -117,6 +164,8 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  error={passwordErr}
+                  helperText="need to fill password"
                 />
               </Grid>
               <Grid item xs={12}>

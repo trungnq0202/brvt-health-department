@@ -24,7 +24,7 @@ export default class DoctorHeader extends Component {
               <a href="#" class="nav-item nav-link active">
                 User Profile
               </a>
-              <a href="/PatientMana" class="nav-item nav-link active">
+              <a href="/PatientList" class="nav-item nav-link active">
                 Patient List
               </a>
             </div>
