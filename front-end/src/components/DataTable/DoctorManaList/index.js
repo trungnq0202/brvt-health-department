@@ -53,7 +53,7 @@ function validateEmail(email){
   return re.test(String(email).toLowerCase());
 }
 
-function UserManaTable() {
+function DoctorManaTable() {
   var columns = [
     {title: "id", field: "id", hidden: true},
     {title: "User name", field: "name"},
@@ -217,4 +217,4 @@ function UserManaTable() {
   );
 }
 
-export default UserManaTable;
+export default DoctorManaTable;

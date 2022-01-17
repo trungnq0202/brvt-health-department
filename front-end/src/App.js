@@ -10,6 +10,9 @@ import RegisterF0 from "./pages/Patient/RegisterF0/RegisterF0";
 import UpdateHealth from "./pages/Patient/UpdateHealth/UpdateHealth";
 import PatientList from "./pages/Doctor/PatientList";
 import DoctorListPage from "./pages/Patient/DoctorListPage";
+import ManageDoctor from "./pages/Admin/ManageDoctor";
+
+
 import Content from "./components/BlogComponents/Content";
 import Bookmark from "./components/BlogComponents/Bookmark";
 import NewStory from "./components/BlogComponents/NewStory";
@@ -31,7 +34,7 @@ export default class App extends Component {
     this.handleSubmission = this.handleSubmission.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
   }
-
+  // Blog handler methods
   handleBookmark(data) {
     let posts = this.state.posts;
     posts = posts.map((post) =>
@@ -69,6 +72,8 @@ export default class App extends Component {
   handleWindow() {
     window.scrollTo(0, 0);
   }
+
+
   render() {
     return (
       <div className="App">
@@ -76,11 +81,17 @@ export default class App extends Component {
         <Routes>
           <Route path="/LogIn" element={<LogIn />} />
           <Route path="/SignUp" element={<SignUp />} />
+
           <Route path="/UserMana" element={<ManageUser />} />
+          <Route path="/DoctorMana" element={<ManageDoctor />} />
+
           <Route path="/RegisterF0" element={<RegisterF0 />} />
           <Route path="/UpdateHealth" element={<UpdateHealth />} />
+
           <Route path="/PatientList" element={<PatientList />} />
           <Route path="/DoctorList" element={<DoctorListPage />} />
+
+          {/* BLOG ROUTE */}
           <Route
             path="/"
             element={
