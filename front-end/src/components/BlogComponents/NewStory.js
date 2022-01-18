@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { stateToMarkdown } from "draft-js-export-markdown";
 
 import {Editor, EditorState, RichUtils, getDefaultKeyBinding} from 'draft-js';
 
@@ -14,7 +14,7 @@ export default class NewStory extends Component {
       this.state = {
         editorState: EditorState.createEmpty(),
         title: '',
-        body: '',
+        content: '',
         done: 'no'
       };
 
@@ -30,9 +30,9 @@ export default class NewStory extends Component {
     onChange(editorState) {
       this.setState({editorState});
       const contentState = this.state.editorState.getCurrentContent();
-      const html = contentState;
-      this.state.title && this.state.body ? this.setState({done: 'done'}) : console.log('hi');
-      this.setState({body: html});
+      const html = stateToMarkdown(contentState);
+      this.state.title && this.state.content ? this.setState({done: 'done'}) : console.log('hi');
+      this.setState({content: html});
     }
 
     _handleKeyCommand(command, editorState) {
@@ -78,11 +78,11 @@ export default class NewStory extends Component {
     }
 
     handleSubmit() {
-      const { title, body } = this.state;
-      if(title && body) {
-        let newStory = {id: uuidv4(), title, body, bookmark: false};
+      const { title, content } = this.state;
+      if(title && content) {
+        let newStory = { title, content, bookmark: false};
         this.props.handleSubmission(newStory);
-        this.setState({editorState: EditorState.createEmpty(), title: '', body: '', done: 'submitted'});
+        this.setState({editorState: EditorState.createEmpty(), title: '', content: '', done: 'submitted'});
       }
     }
 

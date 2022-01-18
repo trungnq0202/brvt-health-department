@@ -8,6 +8,10 @@ class HealthRecordService {
       return axios.get(API_URL + id)
   }
 
+  getByPatientId(id) {
+    return axios.get(API_URL + "findAllByPatientId/" + id)
+  }
+
   delete(id) {
     return axios.delete(API_URL + id);
   }

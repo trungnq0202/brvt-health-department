@@ -30,7 +30,6 @@ const theme = createTheme();
 
 export default function SignUp() {
   const [role, setRole] = React.useState("F0");
-
   const [emailErr, setEmailErr] = React.useState();
   const [passwordErr, setPasswordErr] = React.useState();
   const [nameErr, setNameErr] = React.useState();

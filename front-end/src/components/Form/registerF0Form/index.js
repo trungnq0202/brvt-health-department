@@ -16,7 +16,7 @@ import {
 
 import PatientService from "../../../services/PatientService";
 const onSubmit = async (values) => {
-  PatientService.add(JSON.stringify(values, 0, 2))
+  PatientService.add(values);
   window.alert(JSON.stringify(values, 0, 2));
 };
 
@@ -46,6 +46,9 @@ const validate = (values) => {
   }
   if (!values.address) {
     errors.address = "Required";
+  }
+  if (!values.password) {
+    errors.password = "Required";
   }
   return errors;
 };
@@ -125,6 +128,15 @@ export default class registerF0Form extends Component {
                       component={TextField}
                       multiline
                       label="Enter your address"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Field
+                      fullWidth
+                      name="password"
+                      component={TextField}
+                      multiline
+                      label="Enter your password"
                     />
                   </Grid>
                   <Grid item xs={6}>

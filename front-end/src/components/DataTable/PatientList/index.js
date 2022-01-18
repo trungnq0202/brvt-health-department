@@ -150,7 +150,7 @@ function PatientListTable() {
             detailPanel={(rowData) => {
               return (
                 <Grid container justifyContent="center" spacing={2}>
-                  <HealthCards />
+                  <HealthCards id={rowData.id}/>
                 </Grid>
               );
             }}

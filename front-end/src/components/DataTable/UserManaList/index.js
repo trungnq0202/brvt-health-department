@@ -165,7 +165,7 @@ function UserManaTable() {
     if (newData.address === "") {
       errorList.push("Please enter address");
     }
-    if (newData.dateOfBirth === "" || isValidDate(newData.dateOfBirth)) {
+    if (newData.dateOfBirth === "" || isValidDate(newData.dateOfBirth) === false) {
       errorList.push("Please enter valid dateOfBirth");
     }
     if (newData.password === "") {

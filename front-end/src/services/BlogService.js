@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8086/patient/';
+const API_URL = 'http://localhost:8088/blog/';
 
 class BlogService {
   getAll() {
@@ -15,19 +15,8 @@ class BlogService {
     return axios.delete(API_URL + id);
   }
 
-  update(patient) {
-    var data = JSON.stringify(patient);
-    console.log(data);
-    return axios.put(API_URL, data, {
-      headers: {
-        // Overwrite Axios's automatically set Content-Type
-        'Content-Type': 'application/json'
-      }
-    });
-  }
-
-  add(patient) {
-    var data = JSON.stringify(patient);
+  add(blog) {
+    var data = JSON.stringify(blog);
     console.log(data);
     return axios.post(API_URL + "add", data, {
       headers: {
@@ -35,10 +24,6 @@ class BlogService {
         'Content-Type': 'application/json'
       }
     });
-  }
-
-  updateAssignDoctor(patientId, doctorId) {
-    return axios.post(API_URL + patientId + "/" + doctorId)
   }
 }
 

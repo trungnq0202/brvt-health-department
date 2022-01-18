@@ -21,15 +21,15 @@ export default class DoctorHeader extends Component {
           </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav">
-              <a href="/" class="nav-item nav-link active">
-                Home Page
+              <a href="/blog" class="nav-item nav-link active">
+                Blog
               </a>
-              <a href="/PatientList" class="nav-item nav-link active">
+              <a href="/patient-list" class="nav-item nav-link active">
                 Patient List
               </a>
             </div>
             <div class="navbar-nav ms-auto">
-              <a href="#" class="nav-item nav-link active">
+              <a href="/log-in" class="nav-item nav-link active">
                 Log Out
               </a>
             </div>

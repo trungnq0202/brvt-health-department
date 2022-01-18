@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { BrowserRouter as Router } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import LogIn from "./pages/LogIn/LogIn";
 import SignUp from "./pages/SignUp/SignUp";
 
@@ -12,22 +11,23 @@ import PatientList from "./pages/Doctor/PatientList";
 import DoctorListPage from "./pages/Patient/DoctorListPage";
 import ManageDoctor from "./pages/Admin/ManageDoctor";
 
-
 import Content from "./components/BlogComponents/Content";
 import Bookmark from "./components/BlogComponents/Bookmark";
 import NewStory from "./components/BlogComponents/NewStory";
 import SinglePost from "./components/BlogComponents/SinglePost";
 import React, { Component } from "react";
-
+import BlogService from "./services/BlogService";
 // Sample blog data
-import data from "./data";
-import './App.css';
+import "./App.css";
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      posts: data,
+      posts: [],
+      showAdmin: false,
+      showDoctor: false,
+      showPatient: true,
     };
 
     this.handleBookmark = this.handleBookmark.bind(this);
@@ -35,13 +35,23 @@ export default class App extends Component {
     this.handleSubmission = this.handleSubmission.bind(this);
     this.handleRemove = this.handleRemove.bind(this);
   }
+
+  componentDidMount() {
+    BlogService.getAll()
+      .then((res) => {
+        this.setState({ posts: res.data});
+      })
+      .catch((error) => {
+        console.log("Error");
+      });
+  }
+
   // Blog handler methods
-  // TODO: fetch blog data from API
   handleBookmark(data) {
     let posts = this.state.posts;
     posts = posts.map((post) =>
       post === data
-        ? { id: post.id, title: post.title, body: post.body, bookmark: true }
+        ? { id: post.id, title: post.title, content: post.content, bookmark: true }
         : post
     );
     this.setState({ posts });
@@ -51,7 +61,7 @@ export default class App extends Component {
     let posts = this.state.posts;
     posts = posts.map((post) =>
       post === data
-        ? { id: post.id, title: post.title, body: post.body, bookmark: false }
+        ? { id: post.id, title: post.title, content: post.content, bookmark: false }
         : post
     );
     this.setState({ posts });
@@ -59,15 +69,16 @@ export default class App extends Component {
 
   handleSubmission(data) {
     let posts = this.state.posts;
+    BlogService.add(data);
     posts = [data, ...posts];
     this.setState({ posts });
   }
 
-  handleRemove(post, history) {
+  handleRemove(post) {
     let posts = this.state.posts;
+    BlogService.delete(post.id);
     posts = posts.filter((onepost) => onepost !== post);
     this.setState({ posts });
-    history.push("/");
     this.handleWindow();
   }
 
@@ -75,27 +86,34 @@ export default class App extends Component {
     window.scrollTo(0, 0);
   }
 
-
   render() {
     return (
       <div className="App">
-        <Header role="ADMIN" />
+        {this.state.showAdmin && (
+          <Header role="ADMIN" />
+        )}
+         {this.state.showDoctor && (
+          <Header role="DOCTOR" />
+        )}
+         {this.state.showPatient && (
+          <Header role="PATIENT" />
+        )}
         <Routes>
-          <Route path="/LogIn" element={<LogIn />} />
-          <Route path="/SignUp" element={<SignUp />} />
+          <Route path="/log-in" element={<LogIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
 
-          <Route path="/UserMana" element={<ManageUser />} />
-          <Route path="/DoctorMana" element={<ManageDoctor />} />
+          <Route path="/patient-mana" element={<ManageUser />} />
+          <Route path="/doctor-mana" element={<ManageDoctor />} />
 
-          <Route path="/RegisterF0" element={<RegisterF0 />} />
-          <Route path="/UpdateHealth" element={<UpdateHealth />} />
+          <Route path="/register-f0" element={<RegisterF0 />} />
+          <Route path="/update-health" element={<UpdateHealth />} />
 
-          <Route path="/PatientList" element={<PatientList />} />
-          <Route path="/DoctorList" element={<DoctorListPage />} />
+          <Route path="/patient-list" element={<PatientList />} />
+          <Route path="/doctor-list" element={<DoctorListPage />} />
 
           {/* BLOG ROUTE */}
           <Route
-            path="/"
+            path="/blog"
             element={
               <Content
                 posts={this.state.posts}

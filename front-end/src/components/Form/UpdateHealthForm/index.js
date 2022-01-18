@@ -16,7 +16,7 @@ import {
 import HealthRecordService from "../../../services/HealthRecordService"
 
 const onSubmit = async (values) => {
-  HealthRecordService.add(JSON.stringify(values))
+  HealthRecordService.add(values);
   window.alert(JSON.stringify(values, 0, 2));
 };
 
