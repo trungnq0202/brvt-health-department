@@ -23,6 +23,7 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import axios from 'axios'
 import Alert from '@material-ui/lab/Alert';
+import DoctorService from "../../../services/DoctorService";
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -44,10 +45,6 @@ const tableIcons = {
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
 };
 
-const api = axios.create({
-  baseURL: `https://reqres.in/api`
-})
-
 
 function validateEmail(email){
   const re = /^((?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\]))$/;
@@ -56,11 +53,14 @@ function validateEmail(email){
 
 function DoctorList() {
   var columns = [
-    {title: "id", field: "id", hidden: true},
-    {title: "User name", field: "name"},
-    {title: "phoneNumber", field: "PhoneNumber"},
-    {title: "email", field: "email"},
-    {title: "Career Level", field: "careerLevel"},
+    { title: "id", field: "id", hidden: true },
+    { title: "User name", field: "name" },
+    { title: "phoneNumber", field: "phoneNumber" },
+    { title: "email", field: "email" },
+    { title: "address", field: "address" },
+    { title: "dateOfBirth", field: "dateOfBirth" },
+    { title: "Career Level", field: "careerLevel" },
+    { title: "password", field: "password" },
   ]
   const [data, setData] = useState([]); //table data
 
@@ -70,9 +70,9 @@ function DoctorList() {
 
   useEffect(() => {
     // TODO Get all Doctor API
-    api.get("/users")
+    DoctorService.getAll()
         .then(res => {               
-            setData(res.data.data)
+            setData(res.data)
          })
          .catch(error=>{
              console.log("Error")

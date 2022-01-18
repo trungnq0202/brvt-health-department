@@ -13,25 +13,27 @@ import {
   CssBaseline,
   MenuItem,
 } from "@material-ui/core";
+import HealthRecordService from "../../../services/HealthRecordService"
 
 const onSubmit = async (values) => {
-  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-  await sleep(300);
+  HealthRecordService.add(JSON.stringify(values))
   window.alert(JSON.stringify(values, 0, 2));
 };
 
-function validateDate(date) {
-  var date_regex = /(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d/;
-  if (!date_regex.test(date)) {
-    return false;
-  }
-  return true
+function validateDate(dateString) {
+  var regEx = /^\d{4}-\d{2}-\d{2}$/;
+
+  if (!dateString.match(regEx)) return false; // Invalid format
+  var d = new Date(dateString);
+  var dNum = d.getTime();
+  if (!dNum && dNum !== 0) return false; // NaN value, Invalid date
+  return d.toISOString().slice(0, 10) === dateString;
 }
 
 const validate = (values) => {
   const errors = {};
-  if (!values.email) {
-    errors.email = "Required";
+  if (!values.patientId) {
+    errors.patientId = "Required";
   }
   if (!values.date || !validateDate(values.date)) {
     errors.date = "Required or invalid date. The format is dd/mm/yyyy";
@@ -86,9 +88,9 @@ export default class UpdateHealthForm extends Component {
                   <Grid item xs={12}>
                     <Field
                       fullWidth
-                      name="email"
+                      name="patientId"
                       component={TextField}
-                      label="Enter your email"
+                      label="Enter your patient id"
                     />
                   </Grid>
                   <Grid item xs={12}>

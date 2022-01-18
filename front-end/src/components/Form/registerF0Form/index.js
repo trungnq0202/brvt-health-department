@@ -14,18 +14,20 @@ import {
   MenuItem,
 } from "@material-ui/core";
 
+import PatientService from "../../../services/PatientService";
 const onSubmit = async (values) => {
-  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-  await sleep(300);
+  PatientService.add(JSON.stringify(values, 0, 2))
   window.alert(JSON.stringify(values, 0, 2));
 };
 
-function validateDate(date) {
-  var date_regex = /(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d/;
-  if (!date_regex.test(date)) {
-    return false;
-  }
-  return true
+function validateDate(dateString) {
+  var regEx = /^\d{4}-\d{2}-\d{2}$/;
+
+  if (!dateString.match(regEx)) return false; // Invalid format
+  var d = new Date(dateString);
+  var dNum = d.getTime();
+  if (!dNum && dNum !== 0) return false; // NaN value, Invalid date
+  return d.toISOString().slice(0, 10) === dateString;
 }
 
 const validate = (values) => {
@@ -59,8 +61,14 @@ export default class registerF0Form extends Component {
         <Typography variant="h4" align="center" component="h1" gutterBottom>
           Register F0
         </Typography>
-        <Typography variant="subtitle1" align="center" component="h2" gutterBottom>
-          If you have the positive result from covid 19 test, please let us know your infomation !!
+        <Typography
+          variant="subtitle1"
+          align="center"
+          component="h2"
+          gutterBottom
+        >
+          If you have the positive result from covid 19 test, please let us know
+          your infomation !!
         </Typography>
 
         <Form
@@ -117,6 +125,24 @@ export default class registerF0Form extends Component {
                       component={TextField}
                       multiline
                       label="Enter your address"
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Field
+                      fullWidth
+                      name="illnessLevel"
+                      component={TextField}
+                      multiline
+                      label="Enter your illnessLevel"
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Field
+                      fullWidth
+                      name="status"
+                      component={TextField}
+                      multiline
+                      label="Enter your status"
                     />
                   </Grid>
                   <Grid item xs={6} style={{ marginTop: 16 }}>

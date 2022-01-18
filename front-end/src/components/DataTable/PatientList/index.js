@@ -22,7 +22,7 @@ import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import axios from "axios";
 import Alert from "@material-ui/lab/Alert";
-
+import PatientService from "../../../services/PatientService";
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
   Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -47,10 +47,6 @@ const tableIcons = {
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
 };
 
-const api = axios.create({
-  baseURL: `https://reqres.in/api`,
-});
-
 function validateEmail(email) {
   const re =
     /^((?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\]))$/;
@@ -65,6 +61,8 @@ function PatientListTable() {
     { title: "email", field: "email" },
     { title: "status", field: "status" },
     { title: "illnessLevel", field: "illnessLevel" },
+    { title: "address", field: "address" },
+    { title: "dateOfBirth", field: "dateOfBirth" },
   ];
   const [data, setData] = useState([]); //table data
 
@@ -73,11 +71,9 @@ function PatientListTable() {
   const [errorMessages, setErrorMessages] = useState([]);
 
   useEffect(() => {
-    // TODO Get all user API
-    api
-      .get("/users")
+    PatientService.getAll()
       .then((res) => {
-        setData(res.data.data);
+        setData(res.data);
       })
       .catch((error) => {
         console.log("Error");
@@ -99,17 +95,12 @@ function PatientListTable() {
     if (newData.illnessLevel === "") {
       errorList.push("Please enter illness");
     }
-    if (newData.role === "") {
-      errorList.push("Please pick role name");
-    }
     if (newData.email === "" || validateEmail(newData.email) === false) {
       errorList.push("Please enter a valid email");
     }
 
-    // TODO: Update user api
     if (errorList.length < 1) {
-      api
-        .patch("/users/" + newData.id, newData)
+      PatientService.update(newData)
         .then((res) => {
           const dataUpdate = [...data];
           const index = oldData.tableData.id;
