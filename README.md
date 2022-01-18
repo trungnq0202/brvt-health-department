@@ -1,7 +1,31 @@
 # brvt-health-department
-
+Member:
+* Ngo Quang Trung
+* Tran Minh Quang
+* Tran Thien Van
 ## Project description
 This system is to help manage F0 who receive homecare.  Recently, there are a surge in number of F0 which overloads the health system. Many F0 need to stay home. Therefore, there is a need to have a system to manage F0. This system should allow F0 to self-register or someone will help reigster them (for old patients). F0 will be auto or manually assigned to a doctor.  Everyday, F0 will need to log their vital signs. Everyday, a doctor will login to system and see their patients vital signs. If there is any problem he will recommend the F0 to go to hospital.
+
+## Project installation
+
+### Backend installation
+Open each folder by IntelliJ
+
+1. Run `DiscoveryService`
+2. Run `API gateway`
+3. Run `KafkaService`
+4. Run `DoctorService`
+5. Run `PatientService`
+6. Run `RedisServer`
+7. Run `HealthReportService`
+8. Run `BlogService`
+
+### Front end installation
+~~~
+cd front-end
+npm install
+npm start
+~~~
 
 ## Features
 
