@@ -385,6 +385,14 @@ Manage CRUD for health report of the patient
         "200":
           description: "OK"
 ~~~
+## Load test 
+
+In this section, we will perform stress testing to the APIs of the service to examine the scalability and availability of the system when facing a large number of user and a lot data. In order to generate stress tests, we using 2 python framworks which are Locust - a famoust and simple framework for load test the API and Faker - a fake data generator framework to push data into the database. 
+
+The Locust framework will allow us to create multiple users to generate hundred to thousand of requests which allow us to evaluate the system performance. 
+
+After conducting serveral test cases, overall, the system can work well from hundreds to thousands of users, although there exist some inscrease in responses time which is expected since we use the free subcribtion of the cloud databases. 
+
 ## Application UI list 
 
 - [X] Sign in page
