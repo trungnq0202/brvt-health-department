@@ -25,9 +25,6 @@ export default class App extends Component {
     super(props);
     this.state = {
       posts: [],
-      showAdmin: false,
-      showDoctor: false,
-      showPatient: true,
     };
 
     this.handleBookmark = this.handleBookmark.bind(this);
@@ -39,7 +36,7 @@ export default class App extends Component {
   componentDidMount() {
     BlogService.getAll()
       .then((res) => {
-        this.setState({ posts: res.data});
+        this.setState({ posts: res.data });
       })
       .catch((error) => {
         console.log("Error");
@@ -51,7 +48,12 @@ export default class App extends Component {
     let posts = this.state.posts;
     posts = posts.map((post) =>
       post === data
-        ? { id: post.id, title: post.title, content: post.content, bookmark: true }
+        ? {
+            id: post.id,
+            title: post.title,
+            content: post.content,
+            bookmark: true,
+          }
         : post
     );
     this.setState({ posts });
@@ -61,7 +63,12 @@ export default class App extends Component {
     let posts = this.state.posts;
     posts = posts.map((post) =>
       post === data
-        ? { id: post.id, title: post.title, content: post.content, bookmark: false }
+        ? {
+            id: post.id,
+            title: post.title,
+            content: post.content,
+            bookmark: false,
+          }
         : post
     );
     this.setState({ posts });
@@ -89,15 +96,8 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.state.showAdmin && (
-          <Header role="ADMIN" />
-        )}
-         {this.state.showDoctor && (
-          <Header role="DOCTOR" />
-        )}
-         {this.state.showPatient && (
-          <Header role="PATIENT" />
-        )}
+        <Header />
+
         <Routes>
           <Route path="/log-in" element={<LogIn />} />
           <Route path="/sign-up" element={<SignUp />} />

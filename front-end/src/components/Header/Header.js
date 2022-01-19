@@ -6,54 +6,61 @@ import DoctorHeader from "./userHeader/DoctorHeader";
 export default class Header extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      showAdmin: false,
-      showDoctor: false,
-      showPatient: false,
-    };
-  }
-
-  componentDidMount() {
-    // TODO: Fetch User
-    switch (this.props.role) {
-      case "ADMIN":
-        this.setState({
-          showAdmin: true,
-          showDoctor: false,
-          showPatient: false,
-        });
-        break;
-      case "DOCTOR":
-        this.setState({
-          showAdmin: false,
-          showDoctor: true,
-          showPatient: false,
-        });
-        break;
-      case "PATIENT":
-        this.setState({
-          showAdmin: false,
-          showDoctor: false,
-          showPatient: true,
-        });
-        break;
-      default:
-        this.setState({
-          showAdmin: false,
-          showDoctor: false,
-          showPatient: true,
-        });
-    }
   }
 
   render() {
-    const { showAdmin, showDoctor, showPatient } = this.state;
     return (
       <div>
-        {showAdmin && <AdminHeader />}
-        {showPatient && <PatientHeader />}
-        {showDoctor && <DoctorHeader />}
+        <nav
+          class="navbar navbar-expand-lg navbar-dark bg-dark text-light py-3"
+          style={{ paddingLeft: "80px", paddingRight: "80px" }}
+        >
+          <div class="container-fluid">
+            <a href="#" class="navbar-brand d-flex align-items-center">
+              {" "}
+              <i class="fa fa-snowflake-o fa-lg text-primary mr-2"></i>
+              <strong>Admin Page</strong>
+            </a>
+            <button
+              type="button"
+              class="navbar-toggler"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarCollapse"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+              <div class="navbar-nav">
+                <a href="/blog" class="nav-item nav-link active">
+                  Blog
+                </a>
+                <a href="/patient-mana" class="nav-item nav-link active">
+                  Manage Patient
+                </a>
+                <a href="/doctor-mana" class="nav-item nav-link active">
+                  Manage Doctor
+                </a>
+                <a href="/patient-list" class="nav-item nav-link active">
+                  Patient List
+                </a>
+                <a href="/register-f0" class="nav-item nav-link active">
+                  Register F0
+                </a>
+                <a href="/update-health" class="nav-item nav-link active">
+                  Update Health
+                </a>
+                <a href="/doctor-list" class="nav-item nav-link active">
+                  See list of doctor
+                </a>
+              </div>
+              <div class="navbar-nav ms-auto">
+                <a href="/log-in" class="nav-item nav-link active">
+                  Log Out
+                </a>
+              </div>
+            </div>
+          </div>
+        </nav>
       </div>
     );
   }
