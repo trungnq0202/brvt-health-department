@@ -11,6 +11,9 @@ This system is to help manage F0 who receive homecare.  Recently, there are a su
 ### Backend installation
 Open each folder by IntelliJ
 
+** NOTE:** we need to install kafka on the local machine and create two topic name: save_doctor and put_doctor
+
+~~~
 1. Run `DiscoveryService`
 2. Run `API gateway`
 3. Run `KafkaService`
@@ -19,6 +22,7 @@ Open each folder by IntelliJ
 6. Run `RedisServer`
 7. Run `HealthReportService`
 8. Run `BlogService`
+~~~
 
 ### Front end installation
 ~~~
@@ -27,20 +31,24 @@ npm install
 npm start
 ~~~
 
-## Features
+## Features (the ticked one are the feature we have completed)
 
-* sign in - sign up
-* 3 roles: admin, doctor, f0
-* Blog 
+**Note**: we use kafka for all service in this project and Redis to store health reports
+
+* [ ] sign in - sign up
+* [ ] 3 roles: admin, doctor, f0
+* [X] Blog and CRUD operation to Blog 
 * F0:
-	* allow F0 to self-register
-	* allow F0 to report health commondition
+	* [X] allow F0 to self-register
+	* [X] allow F0 to report health commondition
+  * [X] F0 can see the patient list 
+  * [X] F0 Register user
 * Doctor
-	* See the status of the patient
-	* see the list of patients
+	* [X] See the status of the patient
+	* [X] see the list of patients
 * Admin:
-	* Manage list of patients
-	* Manage list of Doctors
+	* [X] Manage list of patients
+	* [X] Manage list of Doctors
 
 ## System architecture
 The basic architecture for building web applications are monolithic which all of the services will run on one server and share the same database. However, the growth of web applications will require more features to be added to the system and monolithic architecture show its weak points at this stage since adding features can cause many risk to the system dependency and performance. 
