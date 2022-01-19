@@ -393,6 +393,16 @@ The Locust framework will allow us to create multiple users to generate hundred 
 
 After conducting serveral test cases, overall, the system can work well from hundreds to thousands of users, although there exist some inscrease in responses time which is expected since we use the free subcribtion of the cloud databases. 
 
+Step to perform the load test 
+~~~
+cd loadTest
+
+pip install -r requirements.txt
+
+# Runing *Services.py files using Locust command
+locust -f fileName.py
+~~~
+
 ## Application UI list 
 
 - [X] Sign in page
